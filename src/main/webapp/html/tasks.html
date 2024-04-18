@@ -5,6 +5,19 @@
     <title>Tasks</title>
 </head>
 <body>
-
+<table>
+    <thead>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Status</th>
+    </thead>
+    <tbody>
+        <tr th:each="task,number :${taskList}">
+            <td th:text="${task.getId()}"/>
+            <td th:text="${task.getDescription()}" th:id="'description_' + ${task.getId()}"/>
+            <td th:text="${task.getStatus()}" th:id="'status_' + ${task.getStatus()}"/>
+        </tr>
+    </tbody>
+</table>
 </body>
 </html>
