@@ -1,5 +1,5 @@
 function delete_task(task_id) {
-    let url = "/" + task_id;
+    let url = getBaseUrl() + task_id;
     $.ajax({
         url: url,
         type: 'DELETE',
@@ -44,7 +44,7 @@ function getDropdownStatusHtml(task_id) {
 }
 
 function update_task(task_id) {
-    let url = "/" + task_id;
+    let url = getBaseUrl() + task_id;
 
     let value_description = $("#input_description_" + task_id).val();
     let value_status = $("#select_status_" + task_id).val();
@@ -69,7 +69,6 @@ function update_task(task_id) {
 }
 
 function add_task() {
-    let url = "/";
 
     let value_description = $("#description_new").val();
     let value_status = $("#status_new").val();
@@ -77,7 +76,7 @@ function add_task() {
     console.log("Adding new task with description: " + value_description + ", status: " + value_status);
 
     $.ajax({
-        url: url,
+        url: getBaseUrl(),
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -91,5 +90,11 @@ function add_task() {
     setTimeout(() => {
         document.location.reload();
     }, 300);
+}
+
+function getBaseUrl(){
+    let current_path = window.location.href;
+    let end_position = current_path.indexOf('?');
+    return current_path.substring(0, end_position);
 }
 
