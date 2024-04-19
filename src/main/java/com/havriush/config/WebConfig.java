@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 
@@ -39,6 +40,14 @@ public class WebConfig implements WebMvcConfigurer {
         engine.setTemplateResolver(templateResolver());
         engine.setEnableSpringELCompiler(true);
         return engine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver viewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(engine());
+        viewResolver.setCharacterEncoding("UTF-8");
+        return viewResolver;
     }
 
     @Override
