@@ -8,54 +8,33 @@
     <script src="script/my.js"></script>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Description</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="task,number :${taskList}">
-        <td th:text="${task.getId()}"/>
-        <td th:text="${task.getDescription()}" th:id="'description_' + ${task.getId()}"/>
-        <td th:text="${task.getStatus()}" th:id="'status_' + ${task.getStatus()}"/>
-        <td>
-            <button th:id="'edit_' + ${task.getId()}" th:onclick="'edit_task('+ ${task.getId()} +')'">Edit</button>
-        </td>
-        <td>
-            <button th:id="'delete_' + ${task.getId()}" th:onclick="'delete_task('+ ${task.getId()} +')'">Delete
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3" class="text_bold">Add new task</td>
-    </tr>
-    <tr>
-        <td>-</td>
-        <td>
-            <input id="description_new" type="text" value=''>
-        </td>
-        <td>
-            <label for='status_new'></label>
-            <select id='status_new'>
-                <option value='IN_PROGRESS'>IN_PROGRESS</option>
-                <option value='DONE'>DONE</option>
-                <option value='PAUSED'>PAUSED</option>
-            </select>
-        </td>
-        <td>
-            <button id='save_new' onclick='add_task()'>Save</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<h2>
-    <button th:each="pageNumber : ${page_numbers}" class="button_page">
-        <a th:href="@{/(page=${pageNumber}, limit=10)}" th:text="${pageNumber}"
-           th:classappend="${pageNumber == current_page? 'active_page' : ''}"></a>
-    </button>
-</h2>
+<div class="container">
+    <h1>List of tasks</h1>
+    <table class="task-list">
+        <tr th:each="task,number :${taskList}" class="task-row">
+            <td class="task-id" th:text="${task.getId()}"></td>
+            <td class="task-description" th:text="${task.getDescription()}" th:id="'description_' + ${task.getId()}"></td>
+            <td class="task-status" th:text="${task.getStatus()}" th:id="'status_' + ${task.getStatus()}"></td>
+            <td><button class="task-button edit" th:id="'edit_' + ${task.getId()}" th:onclick="'edit_task('+ ${task.getId()} +')'">Edit</button></td>
+            <td><button class="task-button delete" th:id="'delete_' + ${task.getId()}" th:onclick="'delete_task('+ ${task.getId()} +')'">Delete</button></td>
+        </tr>
+    </table>
+    <div class="add-task">
+        <h2>New task</h2>
+        <input id="description_new" type="text" placeholder="Task description">
+        <select id='status_new'>
+            <option value='IN_PROGRESS'>IN_PROGRESS</option>
+            <option value='DONE'>DONE</option>
+            <option value='PAUSED'>PAUSED</option>
+        </select>
+        <button id='save_new' onclick='add_task()'>Save</button>
+    </div>
+    <div class="pagination">
+        <button th:each="pageNumber : ${page_numbers}" class="button_page">
+            <a th:href="@{/(page=${pageNumber}, limit=10)}" th:text="${pageNumber}"
+               th:classappend="${pageNumber == current_page? 'active_page' : ''}"></a>
+        </button>
+    </div>
+</div>
 </body>
 </html>
