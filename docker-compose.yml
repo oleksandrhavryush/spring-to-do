@@ -3,8 +3,6 @@ services:
     build: /
     ports:
       - '8080:8080'
-    #volumes:
-     # - ./:/usr/local/tomcat/webapps
     depends_on:
       db:
         condition: service_healthy
@@ -17,6 +15,7 @@ services:
       - '3306:3306'
     volumes:
       - my-db:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
     healthcheck:
       test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
       interval: 2s
