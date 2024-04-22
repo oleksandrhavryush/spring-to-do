@@ -19,5 +19,4 @@ public class Task {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", columnDefinition = "INT")
     private Status status;
-
 }

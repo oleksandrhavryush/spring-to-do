@@ -5,4 +5,3 @@ public class TaskListNotFoundException extends RuntimeException {
         super(message);
     }
 }
-
