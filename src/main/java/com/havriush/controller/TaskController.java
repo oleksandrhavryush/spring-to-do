@@ -1,6 +1,10 @@
 package com.havriush.controller;
 
 import com.havriush.domain.Task;
+import com.havriush.exception.TaskCreationException;
+import com.havriush.exception.TaskDeletionException;
+import com.havriush.exception.TaskListNotFoundException;
+import com.havriush.exception.TaskNotFoundException;
 import com.havriush.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,9 @@ public class TaskController {
                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                               @RequestParam(value = "limit", required = false, defaultValue = "10") int limit) {
         List<Task> taskList = taskService.getAllTasks((page - 1) * limit, limit);
+        if (taskList == null) {
+            throw new TaskListNotFoundException("Task list not found");
+        }
         model.addAttribute("taskList", taskList);
         model.addAttribute("current_page", page);
         int totalPages = (int) Math.ceil(1.0 * taskService.getAllTasksCount() / limit);
@@ -37,6 +44,9 @@ public class TaskController {
                              @PathVariable Integer id,
                              @RequestBody TaskRequestDTO taskRequestDTO) {
         Task task = taskService.updateTask(id, taskRequestDTO.getDescription(), taskRequestDTO.getStatus());
+        if (task == null) {
+            throw new TaskNotFoundException("Task with id " + id + " not found");
+        }
         model.addAttribute("task", task);
 
         return "redirect:/tasks/" + id;
@@ -46,6 +56,9 @@ public class TaskController {
     public String createTask(Model model,
                              @RequestBody TaskRequestDTO taskRequestDTO) {
         Task task = taskService.createTask(taskRequestDTO.getDescription(), taskRequestDTO.getStatus());
+        if (task == null) {
+            throw new TaskCreationException("Task could not be created");
+        }
         model.addAttribute("task", task);
         return "redirect:/tasks/" + task.getId();
     }
@@ -53,7 +66,11 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public String delete(Model model,
                          @PathVariable Integer id) {
-        taskService.deleteTaskById(id);
+        try {
+            taskService.deleteTaskById(id);
+        } catch (Exception e) {
+            throw new TaskDeletionException("Task with id " + id + " could not be deleted");
+        }
         return "tasks";
     }
 }
