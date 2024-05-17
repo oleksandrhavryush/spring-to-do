@@ -14,14 +14,12 @@ function edit_task(task_id) {
     let identifier_delete = "#delete_" + task_id;
     $(identifier_delete).remove();
 
-    //replace "edit" button with "save
+    //replace "edit" button with "save"
     let identifier_edit = "#edit_" + task_id;
-    let save_tag = "<button id='save_" + task_id + "'>Save</button>";
-    $(identifier_edit).html(save_tag);
-    let property_save_tag = "update_task(" + task_id + ")";
-    $(identifier_edit).attr("onclick", property_save_tag);
+    let save_tag = "<button id='save_" + task_id + "' onclick='update_task(" + task_id + ")'>Save</button>";
+    $(identifier_edit).replaceWith(save_tag);
 
-    let current_te_element = $(identifier_edit).parent().parent();
+    let current_te_element = $("#description_" + task_id).parent();
     let children = current_te_element.children();
     let td_description = children[1];
     td_description.innerHTML = "<input id='input_description_" + task_id + "' type='text' value='" + td_description.innerHTML + "'>";
@@ -58,9 +56,6 @@ function update_task(task_id) {
         contentType: 'application/json; charset=utf-8',
         async: false,
         data: JSON.stringify({"description": value_description, "status": value_status}),
-        /* success: function () {
-             document.location.reload();
-         }*/
     });
 
     setTimeout(() => {
@@ -69,7 +64,6 @@ function update_task(task_id) {
 }
 
 function add_task() {
-
     let value_description = $("#description_new").val();
     let value_status = $("#status_new").val();
 
@@ -97,4 +91,3 @@ function getBaseUrl(){
     let end_position = current_path.indexOf('?');
     return current_path.substring(0, end_position);
 }
-

@@ -18,7 +18,7 @@ services:
       - ./db/init:/docker-entrypoint-initdb.d
     healthcheck:
       test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
-      interval: 2s
+      interval: 10s
       timeout: 30s
       retries: 10
 
