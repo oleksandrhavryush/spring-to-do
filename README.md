@@ -1,6 +1,5 @@
-# Project "Task Manager"
+# Task Manager: A Web Application for Efficient Task Management
 
-## Overview
 This project is a web application for task management developed using Java, Spring Boot, Hibernate, MySQL, and Docker. It offers a robust and efficient solution for managing tasks, showcasing full CRUD (Create, Read, Update, Delete) functionality implemented through JavaScript.
 
 ## Features
