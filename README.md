@@ -19,7 +19,7 @@ This project is a web application for task management developed using Java, Spri
    - `docker-compose up`
 4. **Access the Application**: Open a web browser and navigate to `http://localhost:8080/root` to access the Task Manager application.
 
-## Noteworthy Implementations
+## Implementations
 
 - **JavaScript for CRUD Operations**: JavaScript is utilized to handle CRUD operations dynamically, providing a seamless user experience without the need for page reloads.
 - **Docker for Easy Deployment**: Utilizing Docker simplifies the deployment process, making the application portable and easy to run on any server environment.
